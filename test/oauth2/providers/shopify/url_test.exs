@@ -95,4 +95,39 @@ defmodule OAuth2.Provider.Shopify.URLTest do
     result = Shopify.URL.extract_shop_domain("https://hexdocs.pm/fuzzyurl/Fuzzyurl.html#content")
     assert result == false
   end
+
+  test "17" do
+    result = Shopify.URL.normalise_url("http://example.myshopify.com")
+    assert result == "example.myshopify.com"
+  end
+
+  test "18" do
+    result = Shopify.URL.normalise_url("https://example.myshopify.com")
+    assert result == "example.myshopify.com"
+  end
+
+  test "19" do
+    result = Shopify.URL.normalise_url("example")
+    assert result == "example.myshopify.com"
+  end
+
+  test "raise when attempting to normalise a hexdocs url" do
+    assert_raise ArgumentError, fn ->
+      Shopify.URL.normalise_url("https://hexdocs.pm/fuzzyurl/Fuzzyurl.html#content")
+    end
+  end
+
+  test "raise when attempting to normalise a stackoverflow question url" do
+    assert_raise ArgumentError, fn ->
+      Shopify.URL.normalise_url(
+        "https://stackoverflow.com/questions/39041335/how-to-validate-url-in-elixir"
+      )
+    end
+  end
+
+  test "raise when attempting to normalise a stackoverflow home url" do
+    assert_raise ArgumentError, fn ->
+      Shopify.URL.normalise_url("https://stackoverflow.com/")
+    end
+  end
 end
