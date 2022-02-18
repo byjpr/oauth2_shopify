@@ -4,6 +4,18 @@ defmodule OAuth2.Provider.Shopify.URL do
   """
 
   @doc """
+  Takes a string and formats it to return `{domain}.myshopify.com`
+  """
+  def normalise(string) do
+    if(myshopify_domain?(string)) do
+      subdomain = extract_shop_domain(string)
+      {:ok, "#{subdomain}.myshopify.com"}
+    else
+      {:error, string}
+    end
+  end
+
+  @doc """
   Check string for being a valid `myshopify.com` url
   """
   def myshopify_domain?(string) do
