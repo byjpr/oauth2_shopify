@@ -1,7 +1,7 @@
 defmodule OAuth2Shopify.Mixfile do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
 
   def project do
     [
@@ -32,6 +32,8 @@ defmodule OAuth2Shopify.Mixfile do
 
   defp deps do
     [
+      {:domainatrex, "~> 2.2.0"},
+      {:fuzzyurl, "~> 0.9.0"},
       {:oauth2, "~> 0.9"},
       {:poison, "~> 3.1", only: :test},
       {:bypass, "~> 0.6", only: :test},
