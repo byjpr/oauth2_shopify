@@ -18,6 +18,17 @@ defmodule OAuth2.Provider.Shopify.URL do
   end
 
   @doc """
+  Simple prefix https protocol.
+
+  Checks for http:// or https://, if it doesn't find either protocol `https://` is prefixed.
+  """
+  def prefix_protocol(string) do
+    unless String.starts_with?(string, ["http://", "https://"]) do
+      "https://#{string}"
+    end
+  end
+
+  @doc """
   Check string for being a valid `myshopify.com` url
   """
   def myshopify_domain?(string) do
