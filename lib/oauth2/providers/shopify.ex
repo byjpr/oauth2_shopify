@@ -27,6 +27,7 @@ defmodule OAuth2.Provider.Shopify do
       @client_defaults
       |> Keyword.merge(config())
       |> Keyword.merge(opts)
+      |> ensure_site_protocol
 
     OAuth2.Client.new(opts)
   end
@@ -95,5 +96,10 @@ defmodule OAuth2.Provider.Shopify do
 
   defp config do
     Application.get_env(:oauth2_shopify, OAuth2.Provider.Shopify)
+  end
+
+  defp ensure_site_protocol(config) do
+    config
+    |> Keyword.merge(site: OAuth2.Provider.Shopify.URL.prefix_protocol(config[:site]))
   end
 end
