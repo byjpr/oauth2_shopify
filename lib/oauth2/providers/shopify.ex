@@ -75,6 +75,8 @@ defmodule OAuth2.Provider.Shopify do
   Retrieves the shop's configuration from Shopify `/shop.json` endpoint.
   """
   def get_shop(client, query_params \\ []) do
+    client = client |> put_header("X-Shopify-Access-Token", client.token.access_token)
+
     case OAuth2.Client.get(client, "/admin/api/2022-01/shop.json") do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
         {:error, "Unauthorized"}
